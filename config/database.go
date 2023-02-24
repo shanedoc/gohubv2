@@ -4,7 +4,7 @@ import "gohubv2/pkg/config"
 
 //数据库配置
 func init() {
-	config.Add("databases", func() map[string]interface{} {
+	config.Add("database", func() map[string]interface{} {
 		return map[string]interface{}{
 			// 默认数据库
 			"connection": config.Env("DB_CONNECTION", "mysql"),

@@ -24,14 +24,12 @@ func main() {
 	flag.Parse()
 	config.InitConfig(env)
 
+	//初始化db
+	bootstrap.SetupDB()
+
 	//实例化gin实例
 	r := gin.New()
 	//注册路由
-	bootstrap.SetupRoute(r)
-
-	//初始化db
-	bootstrap.SetupDB()
-	//初始化路由绑定
 	bootstrap.SetupRoute(r)
 
 	err := r.Run(":8001")

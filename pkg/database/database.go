@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/jinzhu/gorm"
 	"gorm.io/gorm"
 	gormlogger "gorm.io/gorm/logger"
 )

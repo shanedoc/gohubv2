@@ -4,7 +4,6 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.8.2
-	github.com/jinzhu/gorm v1.9.16
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.15.0
 	gorm.io/driver/mysql v1.4.7
