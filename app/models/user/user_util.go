@@ -6,12 +6,12 @@ import "gohubv2/pkg/database"
 
 func IsEmailExists(email string) bool {
 	var count int64
-	database.DB.Model(User{}).Where("email=?", email).Count(&count)
+	database.DB.Model(&User{}).Where("email=?", email).Count(&count)
 	return count > 0
 }
 
 func IsPhoneExists(phone string) bool {
 	var count int64
-	database.DB.Model(User{}).Where("phone=?", phone).Count(&count)
+	database.DB.Model(&User{}).Where("phone=?", phone).Count(&count)
 	return count > 0
 }
