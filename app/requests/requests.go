@@ -2,7 +2,7 @@ package requests
 
 import (
 	"fmt"
-	"net/http"
+	"gohubv2/pkg/response"
 
 	"github.com/gin-gonic/gin"
 	"github.com/thedevsaddam/govalidator"
@@ -17,9 +17,7 @@ type ValidatorFunc func(interface{}, *gin.Context) map[string][]string
 func Validate(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
 	//解析requsest请求
 	if err := c.ShouldBind(obj); err != nil {
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"error": err.Error(),
-		})
+		response.BadRequest(c, err)
 		fmt.Println(err.Error())
 		return false
 	}
@@ -28,10 +26,7 @@ func Validate(c *gin.Context, obj interface{}, handler ValidatorFunc) bool {
 
 	//返回结果
 	if len(errs) > 0 {
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"message": "请求验证不通过，具体请查看 errors",
-			"errors":  errs,
-		})
+		response.ValidationError(c, errs)
 		return false
 	}
 	return true
