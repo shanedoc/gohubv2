@@ -34,6 +34,9 @@ func main() {
 	//初始化db
 	bootstrap.SetupDB()
 
+	//初始化redis
+	bootstrap.SetUpRedis()
+
 	//实例化gin实例
 	r := gin.New()
 	//注册路由
