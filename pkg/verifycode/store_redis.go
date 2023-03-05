@@ -33,7 +33,7 @@ func (s *RedisStore) Get(key string, clear bool) (value string) {
 }
 
 //verify
-func (s *RedisStore) verify(key, answer string, clear bool) bool {
+func (s *RedisStore) Verify(key, answer string, clear bool) bool {
 	v := s.Get(key, clear)
 	return v == answer
 }
