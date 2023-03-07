@@ -30,6 +30,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			lc := new(auth.LoginController)
 			authGroup.POST("/login/using-phone", lc.LoginByPhone)
 			authGroup.POST("/login/using-password", lc.LoginByPassword)
+			authGroup.POST("/login/refresh-token", lc.RefreshToken)
 		}
 	}
 }
