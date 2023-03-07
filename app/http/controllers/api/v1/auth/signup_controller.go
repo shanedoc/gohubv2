@@ -41,5 +41,26 @@ func (sc *SignUpController) IsEmailExist(c *gin.Context) {
 	response.JSON(c, gin.H{
 		"exist": user.IsPhoneExists(request.Email),
 	})
+}
 
+//使用手机验证码注册
+func (sc *SignUpController) SignUpUsingPhone(c *gin.Context) {
+	request := requests.SignupUsingPhoneRequest{}
+	if ok := requests.Validate(c, &request, requests.SignUpUsingPhone); !ok {
+		return
+	}
+	//创建user
+	_user := user.User{
+		Name:     request.Name,
+		Phone:    request.Phone,
+		Password: request.Password,
+	}
+	_user.Create()
+	if _user.ID > 0 {
+		response.CreatedJSON(c, gin.H{
+			"data": _user,
+		})
+	} else {
+		response.Abort500(c, "创建用户失败")
+	}
 }
