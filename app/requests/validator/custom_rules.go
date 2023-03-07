@@ -45,37 +45,4 @@ func init() {
 		return nil
 	})
 
-	//自定义验证规则
-	govalidator.AddCustomRule("not_exists", func(field, rule, message string, value interface{}) error {
-		//自定义规则 not_exists，验证请求数据必须不存在于数据库中。
-		//常用于保证数据库某个字段的值唯一，如用户名、邮箱、手机号、或者分类的名称。
-		rng := strings.Split(strings.TrimPrefix(rule, "not_exists:"), ",")
-		tableName := rng[0]
-		dbFiled := rng[1]
-		//排查ID
-		var exceptID string
-		if len(rng) > 2 {
-			exceptID = rng[2]
-		}
-		//用户请求数据
-		requestValue := value.(string)
-		//拼接
-		query := database.DB.Table(tableName).Where(dbFiled+"=?", requestValue)
-		// 如果传参第三个参数，加上 SQL Where 过滤
-		if len(exceptID) > 0 {
-			query.Where("id != ?", exceptID)
-		}
-		//是否存在标示
-		var count int64
-		query.Count(&count)
-		if count != 0 {
-			// 如果有自定义错误消息的话
-			if message != "" {
-				return errors.New(message)
-			}
-			// 默认的错误消息
-			return fmt.Errorf("%v 已存在", requestValue)
-		}
-		return nil
-	})
 }

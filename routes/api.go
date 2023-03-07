@@ -18,6 +18,7 @@ func RegisterAPIRoutes(r *gin.Engine) {
 			suc := new(auth.SignUpController)
 			authGroup.POST("/signup/phone/exist", suc.IsPhoneExists)
 			authGroup.POST("/signup/using-phone", suc.SignUpUsingPhone)
+			authGroup.POST("/signup/using-email", suc.SignUpUsingEmail)
 			authGroup.POST("/signup/email/exist", suc.IsEmailExist)
 
 			//发送验证码

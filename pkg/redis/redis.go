@@ -66,6 +66,7 @@ func (rds *RedisClient) Set(key string, value interface{}, expiration time.Durat
 //get
 func (rds *RedisClient) Get(key string) string {
 	ret, err := rds.Client.Get(rds.Context, key).Result()
+	logger.Debug(ret)
 	if err != nil {
 		logger.ErrorString("Redis", "Get", err.Error())
 		return ""
