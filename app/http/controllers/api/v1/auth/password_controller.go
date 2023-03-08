@@ -28,3 +28,20 @@ func (pc *PasswordController) ResetPassword(c *gin.Context) {
 		response.Success(c)
 	}
 }
+
+// ResetByEmail 使用 Email 和验证码重置密码
+func (pc *PasswordController) ResetByEmail(c *gin.Context) {
+	request := requests.ResetByEmailRequest{}
+	if ok := requests.Validate(c, &request, requests.ResetByEmail); !ok {
+		return
+	}
+	userModel := user.GetByPhone(request.Email)
+	if userModel.ID == 0 {
+		response.Abort404(c)
+	} else {
+		userModel.Password = request.Password
+		userModel.Save()
+
+		response.Success(c)
+	}
+}
